@@ -8,6 +8,10 @@ router.get('/', synth_controller.index);
 
 router.get('/synths', synth_controller.synth_list);
 
+router.get('/synth/add', synth_controller.synth_add_get);
+
+router.post('/synth/add', synth_controller.synth_add_post);
+
 router.get('/synth/:id', synth_controller.synth_detail);
 
 router.get('/manufacturer/:id', manufacturer_controller.manufacturer_detail);

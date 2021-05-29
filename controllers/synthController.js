@@ -60,19 +60,107 @@ exports.synth_detail = function (req, res, next) {
     });
 };
 
-// exports.synth_create_get = function(req, res, next) {
-//   async.parallel({
-//     manufacturers: function(callback) {
-//       Manufacturer.find(callback)
-//     },
-//     categories: function(callback) {
-//       Category.find(callback)
-//     },
-//   },
-//   function(err, results) {
-//     if(err) {
-//       return next(err)
-//     }
-//     res.render
-//   })
-// }
+// Display synth add form on GET
+exports.synth_add_get = function (req, res, next) {
+  async.parallel(
+    {
+      manufacturers: function (callback) {
+        Manufacturer.find(callback);
+      },
+      categories: function (callback) {
+        Category.find(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      res.render('synth_form', {
+        manufacturers: results.manufacturers,
+        categories: results.categories,
+      });
+    }
+  );
+};
+
+// Display synth add on POST
+exports.synth_add_post = [
+  // Convert manufacturer to an array
+  (req, res, next) => {
+    if (!(req.body.manufacturer instanceof Array)) {
+      if (typeof req.body.manufacturer === 'undefined')
+        req.body.manufacturer = [];
+      else req.body.manufacturer = new Array(req.body.manufacturer);
+
+      next();
+    }
+  },
+
+  // Validate and sanitise fields
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('in_stock', 'Stock number cannot be a negative.')
+    .trim()
+    .isFloat({ min: 0 })
+    .escape(),
+  body('price', 'Price can not be less than 1.')
+    .trim()
+    .isFloat({ min: 1 })
+    .escape(),
+  body('release_date', 'Release Date must be a valid date.')
+    .trim()
+    .isDate()
+    .escape(),
+  body('category.*').escape(),
+  body('manufacturer.*').escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const synth = new Synth({
+      name: req.body.name,
+      description: req.body.description,
+      in_stock: req.body.in_stock,
+      price: req.body.price,
+      release_date: req.body.release_date,
+      category: req.body.category,
+      manufacturer: req.body.manufacturer,
+    });
+
+    if (!errors.isEmpty()) {
+      async.parallel(
+        {
+          manufacturers: function (callback) {
+            Manufacturer.find(callback);
+          },
+          categories: function (callback) {
+            Category.find(callback);
+          },
+        },
+        function (err, results) {
+          if (err) {
+            return next(err);
+          }
+
+          res.render('synth_form', {
+            manufacturers: results.manufacturers,
+            categories: results.categories,
+          });
+        }
+      );
+
+      return;
+    } else {
+      synth.save(function (err) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect(synth.url);
+      });
+    }
+  },
+];

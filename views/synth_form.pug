@@ -1,0 +1,34 @@
+extends layout
+
+block content
+
+  form(method='POST' action='')
+    div(class='form-ctn')
+      label(for="name") Name  
+      input(type='text' placeholder="Name of synth" name='name' required='true' )
+
+      label(for="name") In Stock 
+      input(type='number' placeholder="Stock amount" name='in_stock' required='true' )
+
+      label(for="name") Price
+      input(type='number' placeholder="Price" name='price' required='true' )
+
+      label(for="name") Release Date 
+      input(type='date' placeholder="" name='release_date' required='true' )
+     
+      label(for="name") Polyphony 
+      select(name='category')
+        each poly in categories
+          option(value=poly._id name='category') #{poly.title}
+      
+      div
+        label(for='manufacturer') Manufacturer 
+        select(name='manufacturer')
+          each company in manufacturers 
+            option(value=company._id name='category') #{company.title}
+        button(type='button') Add new manufacturer
+
+      label(for="name") Description 
+      textarea(name="description", cols="30", rows="10" placeholder="Description of the synth" required='true')   
+
+      button(type="submit") Add
