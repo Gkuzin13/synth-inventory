@@ -164,3 +164,49 @@ exports.synth_add_post = [
     }
   },
 ];
+
+// Synth Delete form on GET
+exports.synth_delete_get = function (req, res, next) {
+  async.parallel(
+    {
+      synth: function (callback) {
+        Synth.findById(req.params.id).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.synth == null) {
+        res.redirect('/catalog/synths');
+        return;
+      }
+
+      res.render('synth_delete', { synth: results.synth });
+    }
+  );
+};
+
+// Handle Synth delete on POST
+exports.synth_delete_post = function (req, res, next) {
+  async.parallel(
+    {
+      synth: function (callback) {
+        Synth.findById(req.body.synthid).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+
+      Synth.findByIdAndRemove(req.body.synthid, function deleteSynth(err) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect('/catalog/synths');
+      });
+    }
+  );
+};

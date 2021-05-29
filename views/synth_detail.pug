@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  img(src=synth.img_url) 
   h1 #{synth.name}
   h4 Manufacturer: 
     each manu in synth.manufacturer
@@ -17,3 +18,6 @@ block content
   span In Stock: #{synth.in_stock}
   br
   span Price: $#{synth.price}
+  
+  br
+  a(href=synth.url+'/delete') DELETE Synth
