@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  
+  ul 
+    each synth in synth_list
+      li  
+        a(href=synth.url) #{synth.name}
+    else 
+      li There are no Synths

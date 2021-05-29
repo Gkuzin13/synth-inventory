@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 #{synth.name}
+  h4 Manufacturer: 
+    each manu in synth.manufacturer
+      
+      a(href=manu.url)  #{manu.title}
+    
+  p #{synth.description}
+  span Polyphony: 
+    each poly in synth.category 
+      span #{poly.title}
+  br
+  span Release Date: #{synth.release_date.getFullYear()}
+  br
+  span In Stock: #{synth.in_stock}
+  br
+  span Price: $#{synth.price}

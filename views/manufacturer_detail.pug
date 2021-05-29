@@ -1,0 +1,12 @@
+extends layout
+
+block content
+
+  h1 Manufacturer: #{manufacturer.title}
+
+  p #{manufacturer.description}
+
+  ul Synths made by #{manufacturer.title}: 
+    each synth in synths 
+      li 
+        a(href=synth.url)  #{synth.name}

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const SynthSchema = new Schema({
   name: String,
@@ -7,8 +7,12 @@ const SynthSchema = new Schema({
   in_stock: Number,
   price: Number,
   release_date: Date,
-  category: [{ type: Schema.Types.ObjectId, ref: "Category" }],
-  manufacturer: [{ type: Schema.Types.ObjectId, ref: "Manufacturer" }],
+  category: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+  manufacturer: [{ type: Schema.Types.ObjectId, ref: 'Manufacturer' }],
 });
 
-module.exports = mongoose.model("Synth", SynthSchema);
+SynthSchema.virtual('url').get(function () {
+  return '/catalog/synth/' + this._id;
+});
+
+module.exports = mongoose.model('Synth', SynthSchema);

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  
+  ul 
+    each company in manufacturer_list
+      li  
+        a(href=company.url) #{company.title}
+    else 
+      li There are no Manufacturers
