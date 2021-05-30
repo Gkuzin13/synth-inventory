@@ -5,30 +5,44 @@ block content
   form(method='POST' action='')
     div(class='form-ctn')
       label(for="name") Name  
-      input(type='text' placeholder="Name of synth" name='name' required='true' )
+      input(type='text' placeholder="Name of synth" name='name' 
+      value=(synth ? synth.name : '') required='true' )
 
-      label(for="name") In Stock 
-      input(type='number' placeholder="Stock amount" name='in_stock' required='true' )
+      label(for="in_stock") In Stock 
+      input(type='number' placeholder="Stock amount" name='in_stock' 
+      value=(synth ? synth.in_stock : '') required='true' )
 
-      label(for="name") Price
-      input(type='number' placeholder="Price" name='price' required='true' )
+      label(for="price") Price
+      input(type='number' placeholder="Price" name='price' 
+      value=(synth ? synth.price : '') required='true' )
 
-      label(for="name") Release Date 
-      input(type='date' placeholder="" name='release_date' required='true' )
+      label(for="release_date") Release Date 
+      - const synthDate = `${synth.release_date.getFullYear()}-1-1}`
+      input(type='date' placeholder="" name='release_date' 
+      value=(synth ? synth.release_date.getFullYear()+'-01-01'  : '') required='true' )
      
-      label(for="name") Polyphony 
+      label(for="category") Polyphony 
       select(name='category')
         each poly in categories
           option(value=poly._id name='category') #{poly.title}
       
       div
         label(for='manufacturer') Manufacturer 
-        select(name='manufacturer')
-          each company in manufacturers 
-            option(value=company._id name='category') #{company.title}
+        if synth 
+          each company in synth.manufacturer
+            select(name='manufacturer')
+              each manufacturer in manufacturers
+                if company.title===manufacturer.title
+                  option(selected value=manufacturer.title) #{manufacturer.title}
+                else 
+                  option(value=manufacturer.title) #{manufacturer.title}
+        else 
+            select(name='manufacturer')
+              each company in manufacturers 
+                option(value=company.title) #{company.title}
         button(type='button') Add new manufacturer
 
-      label(for="name") Description 
-      textarea(name="description", cols="30", rows="10" placeholder="Description of the synth" required='true')   
+      label(for="description") Description 
+      textarea(name="description", cols="30", rows="10" placeholder="Description of the synth" required='true') #{synth ? synth.description : ''}
 
-      button(type="submit") Add
+      button(type="submit") #{synth ? 'Edit' : 'Add'}

@@ -16,6 +16,10 @@ router.get('/synth/:id/delete', synth_controller.synth_delete_get);
 
 router.post('/synth/:id/delete', synth_controller.synth_delete_post);
 
+router.get('/synth/:id/edit', synth_controller.synth_edit_get);
+
+router.post('/synth/:id/edit', synth_controller.synth_edit_post);
+
 router.get('/synth/:id', synth_controller.synth_detail);
 
 router.get('/manufacturer/:id', manufacturer_controller.manufacturer_detail);

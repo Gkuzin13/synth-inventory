@@ -210,3 +210,142 @@ exports.synth_delete_post = function (req, res, next) {
     }
   );
 };
+
+// Display synth edit form on GET
+exports.synth_edit_get = function (req, res, next) {
+  async.parallel(
+    {
+      synth: function (callback) {
+        Synth.findById(req.params.id)
+          .populate('synth')
+          .populate('manufacturer')
+          .populate('category')
+          .exec(callback);
+      },
+      manufacturers: function (callback) {
+        Manufacturer.find(callback);
+      },
+      categories: function (callback) {
+        Category.find(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+
+      if (results.synth == null) {
+        let err = new Error('Synth not found');
+        err.status = 404;
+
+        return next(err);
+      }
+
+      res.render('synth_form', {
+        manufacturers: results.manufacturers,
+        categories: results.categories,
+        synth: results.synth,
+      });
+    }
+  );
+};
+
+// Handle synth edit on POST
+exports.synth_edit_post = [
+  (req, res, next) => {
+    if (!(req.body.category instanceof Array)) {
+      if (typeof req.body.category === 'undefined') req.body.category = [];
+      else req.body.category = new Array(req.body.category);
+    }
+    next();
+  },
+
+  // Validate and sanitise fields
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('in_stock', 'Stock number cannot be a negative.')
+    .trim()
+    .isFloat({ min: 0 })
+    .escape(),
+  body('price', 'Price can not be less than 1.')
+    .trim()
+    .isFloat({ min: 1 })
+    .escape(),
+  body('release_date', 'Release Date must be a valid date.')
+    .trim()
+    .isDate()
+    .escape(),
+  body('category.*').escape(),
+  body('manufacturer.*').escape(),
+
+  // Process request after validation and sanitization
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    // Create a Synth object with escaped/trimmed data with same id
+    const synth = new Synth({
+      name: req.body.name,
+      description: req.body.description,
+      in_stock: req.body.in_stock,
+      price: req.body.price,
+      release_date: req.body.release_date,
+      category: req.body.category,
+      manufacturer: req.body.manufacturer,
+      _id: req.params.id, // Uses same id
+    });
+
+    if (!errors.isEmpty()) {
+      async.parallel(
+        {
+          synth: function (callback) {
+            Synth.findById(req.params.id)
+              .populate('synth')
+              .populate('manufacturer')
+              .populate('category')
+              .exec(callback);
+          },
+          manufacturers: function (callback) {
+            Manufacturer.find(callback);
+          },
+          categories: function (callback) {
+            Category.find(callback);
+          },
+        },
+        function (err, results) {
+          if (err) {
+            return next(err);
+          }
+
+          if (results.synth == null) {
+            let err = new Error('Synth not found');
+            err.status = 404;
+
+            return next(err);
+          }
+
+          res.render('synth_form', {
+            manufacturers: results.manufacturers,
+            categories: results.categories,
+            synth: results.synth,
+          });
+        }
+      );
+    } else {
+      Synth.findByIdAndUpdate(
+        req.params.id,
+        synth,
+        {},
+        function (err, theSynth) {
+          if (err) {
+            return next(err);
+          }
+
+          res.redirect(theSynth.url);
+        }
+      );
+    }
+  },
+];
