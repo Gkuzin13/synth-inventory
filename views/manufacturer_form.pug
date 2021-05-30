@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+  form(method='POST' action='')
+    div(class='form-ctn')
+      label(for='title') Title 
+      input(type='text' placeholder="Name of manufacturer" name='title' 
+      value=(manufacturer ? manufacturer.title : '') required='true' )
+
+      label(for="description") Description 
+      textarea(name="description", cols="30", rows="10" placeholder="Description of the synth" 
+      required='true') #{manufacturer ? manufacturer.description : ''}
+
+      button(type="submit") #{manufacturer ? 'Edit' : 'Add'}

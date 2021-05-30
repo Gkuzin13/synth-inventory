@@ -49,7 +49,7 @@ exports.synth_detail = function (req, res, next) {
       }
       if (synth == null) {
         // No results.
-        var err = new Error('Synth not found');
+        const err = new Error('Synth not found');
         err.status = 404;
         return next(err);
       }

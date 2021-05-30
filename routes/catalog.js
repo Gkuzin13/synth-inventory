@@ -24,6 +24,26 @@ router.get('/synth/:id', synth_controller.synth_detail);
 
 router.get('/manufacturer/:id', manufacturer_controller.manufacturer_detail);
 
+router.get(
+  '/manufacturer/:id/edit',
+  manufacturer_controller.manufacturer_edit_get
+);
+
+router.post(
+  '/manufacturer/:id/edit',
+  manufacturer_controller.manufacturer_edit_post
+);
+
+router.get(
+  '/manufacturer/:id/delete',
+  manufacturer_controller.manufacturer_delete_get
+);
+
+router.post(
+  '/manufacturer/:id/delete',
+  manufacturer_controller.maanufacturer_delete_post
+);
+
 router.get('/manufacturers', manufacturer_controller.manufacturer_list);
 
 module.exports = router;
