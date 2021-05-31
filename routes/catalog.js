@@ -22,6 +22,10 @@ router.post('/synth/:id/edit', synth_controller.synth_edit_post);
 
 router.get('/synth/:id', synth_controller.synth_detail);
 
+router.get('/manufacturer/add', manufacturer_controller.manufacturer_add_get);
+
+router.post('/manufacturer/add', manufacturer_controller.manufacturer_add_post);
+
 router.get('/manufacturer/:id', manufacturer_controller.manufacturer_detail);
 
 router.get(

@@ -182,3 +182,41 @@ exports.maanufacturer_delete_post = function (req, res, next) {
     }
   );
 };
+
+// Dispaly manufacturer add form on GET
+exports.manufacturer_add_get = function (req, res, next) {
+  res.render('manufacturer_form', {});
+};
+
+// Handle manufacturer add on POST
+exports.manufacturer_add_post = [
+  body('title', 'Title must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('description', 'Description must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render('manufacturer_form', {});
+      return;
+    } else {
+      const manufacturer = new Manufacturer({
+        title: req.body.title,
+        description: req.body.description,
+      });
+
+      manufacturer.save(function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(manufacturer.url);
+      });
+    }
+  },
+];

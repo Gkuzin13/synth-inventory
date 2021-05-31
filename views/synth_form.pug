@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  h1 #{synth ? 'Edit Synth' : 'Add Synth'}
 
   form(method='POST' action='')
     div(class='form-ctn')
@@ -17,9 +18,8 @@ block content
       value=(synth ? synth.price : '') required='true' )
 
       label(for="release_date") Release Date 
-      - const synthDate = `${synth.release_date.getFullYear()}-1-1}`
       input(type='date' placeholder="" name='release_date' 
-      value=(synth ? synth.release_date.getFullYear()+'-01-01'  : '') required='true' )
+      value=(synth ? synth.release_date.getFullYear()+'-01-01' : '') required='true' )
      
       label(for="category") Polyphony 
       select(name='category')
@@ -33,13 +33,13 @@ block content
             select(name='manufacturer')
               each manufacturer in manufacturers
                 if company.title===manufacturer.title
-                  option(selected value=manufacturer.title) #{manufacturer.title}
+                  option(selected value=manufacturer._id) #{manufacturer.title}
                 else 
-                  option(value=manufacturer.title) #{manufacturer.title}
+                  option(value=manufacturer._id) #{manufacturer.title}
         else 
             select(name='manufacturer')
               each company in manufacturers 
-                option(value=company.title) #{company.title}
+                option(value=company._id) #{company.title}
         button(type='button') Add new manufacturer
 
       label(for="description") Description 

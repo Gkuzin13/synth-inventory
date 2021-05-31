@@ -83,7 +83,7 @@ exports.synth_add_get = function (req, res, next) {
   );
 };
 
-// Display synth add on POST
+// Handle synth add on POST
 exports.synth_add_post = [
   // Convert manufacturer to an array
   (req, res, next) => {

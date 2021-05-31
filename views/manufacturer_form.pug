@@ -2,6 +2,8 @@ extends layout
 
 block content
 
+  h1 #{manufacturer ? 'Edit Manufacturer' : 'Add Manufacturer'}
+
   form(method='POST' action='')
     div(class='form-ctn')
       label(for='title') Title 
