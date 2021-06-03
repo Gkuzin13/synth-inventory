@@ -1,11 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  
-  ul 
-    each synth in synth_list
-      li  
-        a(href=synth.url) #{synth.name}
+  div(class="flex justify-center items-center")
+    a(href='/catalog/synth/add' 
+    class="flex justify-center items-center mx-3 text-gray-500 border-2 px-2 py-1 hover:border-gray-600")
+      span(class="material-icons" aria-hidden="true") add
+      span New Synthesizer
+  div(class="mt-8 mx-3")
+    each synth in synths
+      div(class="flex justify-center flex-col items-center  p-4")
+        div(class=" max-w-screen-sm max-h-screen-sm py-4") 
+          img(src=synth.img_url alt=`${synth.name} synthesizer image` loading='lazy' class=" w-full h-auto")
+          div(class="flex flex-col mt-5 text-gray-700") 
+            span(class="font-bold text-lg text-black") #{synth.name}
+            span Price: $#{synth.price}
+            span In Stock: #{synth.in_stock}
+            span Release Date: #{synth.release_date.getFullYear()}
+            a(href=synth.url class="text-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-gray-600" 
+            aria-hidden="true") 
+              span More Details
+              
+
     else 
-      li There are no Synths
+      p There are no Synths

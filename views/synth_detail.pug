@@ -1,25 +1,34 @@
 extends layout
 
 block content
-  img(src=synth.img_url) 
-  h1 #{synth.name}
-  h4 Manufacturer: 
-    each manu in synth.manufacturer
+  div(class="flex justify-center px-8")
+    div(class="flex justify-center flex-col  max-w-screen-lg max-h-screen-lg pb-10")
+      img(src=synth.img_url alt=`${synth.name} synthesizer image` loading='lazy' class=" w-full h-auto py-5") 
+      h1(class=" font-bold text-xl") #{synth.name}
+      h4(class="font-bold") Manufacturer: 
+        each manu in synth.manufacturer
+          a(href=manu.url class="underline font-normal")  #{manu.title}
       
-      a(href=manu.url)  #{manu.title}
-    
-  p #{synth.description}
-  span Polyphony: 
-    each poly in synth.category 
-      span #{poly.title}
-  br
-  span Release Date: #{synth.release_date.getFullYear()}
-  br
-  span In Stock: #{synth.in_stock}
-  br
-  span Price: $#{synth.price}
-  
-  br
-  a(href=synth.url+'/delete') DELETE Synth
-  br
-  a(href=synth.url+'/edit') Edit Synth
+      span(class="font-bold") 
+      p #{synth.description}
+      span(class="font-bold") Polyphony: 
+        each poly in synth.category 
+          span(class="font-normal") #{poly.title}
+
+      span(class="font-bold") Release Date: 
+        span(class="font-normal") #{synth.release_date.getFullYear()}
+      span(class="font-bold") In Stock: 
+        span(class="font-normal") #{synth.in_stock}
+      span(class="font-bold") Price: 
+        span(class="font-normal") $#{synth.price}
+      
+      a(href=synth.url+'/edit' 
+      class="flex items-center justify-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-blue-600 hover:text-blue-500" 
+      aria-hidden="true") Edit
+        span(class="material-icons mx-1" aria-hidden="true") edit_note
+     
+      a(href=synth.url+'/delete' 
+      class=" flex items-center justify-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-red-600 hover:text-red-500" 
+      aria-hidden="true") Delete
+                span(class="material-icons mx-1" aria-hidden="true") delete_forever
+

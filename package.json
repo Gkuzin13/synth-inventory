@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css",
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "async": "^3.2.0",
+    "autoprefixer": "^10.2.6",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -14,7 +16,10 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.12.11",
     "morgan": "~1.9.1",
-    "pug": "^3.0.2"
+    "postcss": "^8.3.0",
+    "postcss-cli": "^8.3.1",
+    "pug": "^3.0.2",
+    "tailwindcss": "^2.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

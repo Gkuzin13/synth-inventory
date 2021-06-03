@@ -7,6 +7,7 @@ const SynthSchema = new Schema({
   in_stock: Number,
   price: Number,
   release_date: Date,
+  img_url: String,
   category: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   manufacturer: [{ type: Schema.Types.ObjectId, ref: 'Manufacturer' }],
 });

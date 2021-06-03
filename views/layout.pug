@@ -3,5 +3,16 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet")
   body
+    nav 
+      div(class="flex justify-between items-center p-5 mb-5 bg-white")
+        div(class="logo-ctn")
+          a(href='/' class="text-black text-2xl font-black") Syntage
+
+        div(class="flex justify-between")
+          a(href='/catalog/synths' class="mx-3 text-gray-500 border-2 px-2 py-1 hover:border-gray-600") Synthesizers
+          a(href='/catalog/manufacturers' class="mx-3 text-gray-500 border-2 px-2 py-1 hover:border-gray-600") Manufacturers
+
     block content

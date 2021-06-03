@@ -1,11 +1,12 @@
 extends layout
 
 block content
-  h1= title
+  div(class="flex justify-center flex-col px-10 max-w-screen-sm")
+    h1(class="text-center font-bold text-3xl mb-5") #{title}
   
-  ul 
-    each company in manufacturer_list
-      li  
-        a(href=company.url) #{company.title}
-    else 
-      li There are no Manufacturers
+    div(class="flex flex-col")
+      each company in manufacturer_list
+        a(href=company.url 
+        class="font-bold text-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-gray-600") #{company.title}
+      else 
+        h1 There are no Manufacturers

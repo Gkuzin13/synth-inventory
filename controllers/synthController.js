@@ -23,18 +23,25 @@ exports.index = function (req, res) {
 
 // Display all synths
 exports.synth_list = function (req, res, next) {
-  Synth.find({}, 'manufacturer name')
-    .populate('manufacturer')
-    .exec(function (err, list_synths) {
+  async.parallel(
+    {
+      synths: function (callback) {
+        Synth.find(callback);
+      },
+      manufacturers: function (callback) {
+        Manufacturer.find(callback);
+      },
+    },
+    function (err, results) {
       if (err) {
         return next(err);
       }
-      //Successful, so render
       res.render('synth_list', {
-        title: 'Synth List',
-        synth_list: list_synths,
+        manufacturers: results.manufacturers,
+        synths: results.synths,
       });
-    });
+    }
+  );
 };
 
 // Display synth detail
@@ -119,13 +126,13 @@ exports.synth_add_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-
     const synth = new Synth({
       name: req.body.name,
       description: req.body.description,
       in_stock: req.body.in_stock,
       price: req.body.price,
       release_date: req.body.release_date,
+      img_url: req.body.img_url,
       category: req.body.category,
       manufacturer: req.body.manufacturer,
     });
@@ -292,6 +299,7 @@ exports.synth_edit_post = [
       in_stock: req.body.in_stock,
       price: req.body.price,
       release_date: req.body.release_date,
+      img_url: req.body.img_url,
       category: req.body.category,
       manufacturer: req.body.manufacturer,
       _id: req.params.id, // Uses same id

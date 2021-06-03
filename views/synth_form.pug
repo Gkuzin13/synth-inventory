@@ -4,7 +4,7 @@ block content
   h1 #{synth ? 'Edit Synth' : 'Add Synth'}
 
   form(method='POST' action='')
-    div(class='form-ctn')
+    div(class='flex justify-center flex-col')
       label(for="name") Name  
       input(type='text' placeholder="Name of synth" name='name' 
       value=(synth ? synth.name : '') required='true' )
@@ -20,6 +20,9 @@ block content
       label(for="release_date") Release Date 
       input(type='date' placeholder="" name='release_date' 
       value=(synth ? synth.release_date.getFullYear()+'-01-01' : '') required='true' )
+
+      label(for="img_url") Image URL
+      input(type='url' name='img_url')
      
       label(for="category") Polyphony 
       select(name='category')
@@ -39,8 +42,7 @@ block content
         else 
             select(name='manufacturer')
               each company in manufacturers 
-                option(value=company._id) #{company.title}
-        button(type='button') Add new manufacturer
+                option(value=company._id) #{company.title} 
 
       label(for="description") Description 
       textarea(name="description", cols="30", rows="10" placeholder="Description of the synth" required='true') #{synth ? synth.description : ''}
