@@ -4,6 +4,8 @@ var path = require('path');
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
 
 var indexRouter = require('./routes/index');
 var catalogRouter = require('./routes/catalog');
@@ -12,8 +14,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 //Set up default mongoose connection
-var mongoDB =
-  'mongodb+srv://admin:admin@cluster0.0t3yq.mongodb.net/synth-inventory?retryWrites=true&w=majority';
+var mongoDB = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.0t3yq.mongodb.net/synth-inventory?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Get the default connection
