@@ -1,16 +1,31 @@
 extends layout
 
 block content
+  div(class="flex justify-center px-8 py-5")
+    div(class="flex justify-center flex-col  max-w-screen-lg max-h-screen-lg pb-10")
+      h1(class=" font-bold text-4xl mb-1") #{manufacturer.title}
+      span(class="font-bold") 
+      p #{manufacturer.description}
 
-  h1 Manufacturer: #{manufacturer.title}
+      span(class="mt-2") Synthesizers made by 
+        strong #{manufacturer.title}:
 
-  p #{manufacturer.description}
+      div(class="flex flex-col")
+      each synth in synths
+        a(href=synth.url 
+        class="font-bold text-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-gray-600") #{synth.name}
+      else 
+        h1 
+      
+      span(class="w-full border-gray-200 border-solid border mt-8 mb-2")
 
-  ul Synths made by #{manufacturer.title}: 
-    each synth in synths 
-      li 
-        a(href=synth.url)  #{synth.name}
+      a(href=manufacturer.url+'/edit' 
+      class="flex items-center justify-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-blue-600 hover:text-blue-500" 
+      aria-hidden="true") Edit 
+        span(class="material-icons mx-1" aria-hidden="true") edit_note
+     
+      a(href=manufacturer.url+'/delete' 
+      class=" flex items-center justify-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-red-600 hover:text-red-500" 
+      aria-hidden="true") Delete
+                span(class="material-icons mx-1" aria-hidden="true") delete_forever
 
-  a(href=manufacturer.url+'/edit') Edit
-  br
-  a(href=manufacturer.url+'/delete') Delete

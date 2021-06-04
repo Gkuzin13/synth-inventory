@@ -1,12 +1,18 @@
 extends layout
 
 block content
-  h1 #{manufacturer.name}
 
-  p Do you really want to delete this Manufacturer?
+  form(class='px-16' method='POST' action='')
+    h1(class="font-bold text-center text-2xl py-5") #{manufacturer.title}
 
-    form(method='POST' action='')
-      div.form-group
-        input#manufacturerid.form-control(type='hidden',name='manufacturerid', required='true', value=manufacturer._id )
+    div
+      input(type='hidden',name='manufacturerid', required='true', value=manufacturer._id )
 
-      button.btn.btn-primary(type='submit') Delete
+      label(for="password") Enter secret password to delete this manufacturer: 
+      input(class="mt-1 appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+      type="password" name="password" required='true' placeholder="Password") 
+
+    div(class="flex justify-center") 
+      button(class="w-full flex items-center justify-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-red-600 hover:text-red-500"  
+      type='submit') Yes, delete
+        span(class="material-icons mx-1" aria-hidden="true") clear   

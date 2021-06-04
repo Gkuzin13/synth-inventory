@@ -1,50 +1,68 @@
 extends layout
 
 block content
-  h1 #{synth ? 'Edit Synth' : 'Add Synth'}
+  h1(class="text-center font-bold text-2xl mb-2 mt-10") #{synth ? 'Edit Synth' : 'Add Synth'}
 
   form(method='POST' action='')
-    div(class='flex justify-center flex-col')
-      label(for="name") Name  
-      input(type='text' placeholder="Name of synth" name='name' 
+    div(class='flex justify-between flex-col px-6 pb-20')
+      label(class='mt-2' for="name") Name  
+      input(class="appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      type='text' placeholder="Synthesizer name" name='name' 
       value=(synth ? synth.name : '') required='true' )
 
-      label(for="in_stock") In Stock 
-      input(type='number' placeholder="Stock amount" name='in_stock' 
+      label(class='mt-2' for="in_stock") In Stock 
+      input(class="appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+      type='number' placeholder="Stock amount" name='in_stock' 
       value=(synth ? synth.in_stock : '') required='true' )
 
-      label(for="price") Price
-      input(type='number' placeholder="Price" name='price' 
+      label(class='mt-2' for="price") Price
+      input(class="appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+      type='number' placeholder="Price" name='price' 
       value=(synth ? synth.price : '') required='true' )
 
-      label(for="release_date") Release Date 
-      input(type='date' placeholder="" name='release_date' 
+      label(class='mt-2' for="release_date") Release Date 
+      input(class="appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+       type='date' placeholder="" name='release_date' 
       value=(synth ? synth.release_date.getFullYear()+'-01-01' : '') required='true' )
 
-      label(for="img_url") Image URL
-      input(type='url' name='img_url')
+      label(class='mt-2' for="img_url") Image URL
+      input(class="appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      type='url' placeholder="URL" name='img_url')
      
-      label(for="category") Polyphony 
-      select(name='category')
+      label(class='mt-2' for="category") Polyphony 
+      select(class="cursor-pointer mb-2 block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-2 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+      name='category')
         each poly in categories
           option(value=poly._id name='category') #{poly.title}
       
       div
-        label(for='manufacturer') Manufacturer 
+        label(class='mt-2' for='manufacturer') Manufacturer 
         if synth 
           each company in synth.manufacturer
-            select(name='manufacturer')
+            select(class="cursor-pointer block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-2 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+            name='manufacturer')
               each manufacturer in manufacturers
                 if company.title===manufacturer.title
                   option(selected value=manufacturer._id) #{manufacturer.title}
                 else 
                   option(value=manufacturer._id) #{manufacturer.title}
         else 
-            select(name='manufacturer')
+            select(class="cursor-pointer block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-2 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            name='manufacturer')
               each company in manufacturers 
                 option(value=company._id) #{company.title} 
 
-      label(for="description") Description 
-      textarea(name="description", cols="30", rows="10" placeholder="Description of the synth" required='true') #{synth ? synth.description : ''}
+      label(class='mt-2' for="description") Description 
+      textarea(class="appearance-none border-2 border-gray-200 w-full p-2 mb-5 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+      name="description", cols="30", rows="10" placeholder="Short description about the synthesizer" required='true') #{synth ? synth.description : ''}
 
-      button(type="submit") #{synth ? 'Edit' : 'Add'}
+      if synth 
+        label(for="password") Enter secret password to edit this synthesizer: 
+        input(class="mt-1 appearance-none border-2 border-gray-200 w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+        type="password" name="password" required='true' placeholder="Password") 
+
+      div(class="flex justify-center items-center mt-4")
+        button(class="w-full flex items-center justify-center text-gray-500 border-2 px-2 py-1 hover:border-green-700 hover:text-green-700"
+        type="submit" name='submit') #{synth ? 'Edit' : 'Add'}
+          span(class="material-icons ml-1" aria-hidden="true") done
+      

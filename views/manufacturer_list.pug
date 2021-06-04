@@ -1,8 +1,14 @@
 extends layout
 
 block content
+  div(class="flex justify-center items-center")
+     a(href='/catalog/manufacturer/add' 
+     class="flex items-center justify-center text-gray-500 mt-5 border-2 px-2 py-1 hover:border-green-700 hover:text-green-700")
+      span(class="material-icons mr-1" aria-hidden="true") add
+      span Manufacturer
+
   div(class="flex justify-center flex-col px-10 max-w-screen-sm")
-    h1(class="text-center font-bold text-3xl mb-5") #{title}
+    h1(class="text-center font-bold text-3xl my-5") #{title}
   
     div(class="flex flex-col")
       each company in manufacturer_list

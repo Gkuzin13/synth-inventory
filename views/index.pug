@@ -1,11 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
-  a(href='/catalog/synth/add') Add new synth
-  br
-  a(href='/catalog/manufacturer/add') Add new manufacturer
+  h1(class=" pt-14 font-bold text-center text-4xl text-gray-800") Best #{title}
+  
+  div(class="flex flex-col items-center py-4") 
+    h2(class="text-lg my-1") Start off by adding a synthesizer
+    div(class="flex justify-center items-center")
+      a(href='/catalog/synth/add' 
+      class="w-full flex items-center justify-center text-gray-500 border-2 px-2 py-1 hover:border-green-700 hover:text-green-700")
+        span(class="material-icons mr-1" aria-hidden="true") add
+        span Synthesizer
+
+    h2(class="text-lg mt-5 mb-1") Or a manufacturer
+    div(class="flex justify-center items-center")
+      a(href='/catalog/manufacturer/add' 
+      class="w-full flex items-center justify-center text-gray-500 border-2 px-2 py-1 hover:border-green-700 hover:text-green-700")
+        span(class="material-icons mr-1" aria-hidden="true") add
+        span Manufacturer
+
+  svg(class='fixed bottom-0 left-0 right-0' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320")
+   path(fill="black" fill-opacity="0.2" d="M0,64L360,256L720,224L1080,96L1440,224L1440,320L1080,320L720,320L360,320L0,320Z")
 
 
   
