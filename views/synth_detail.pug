@@ -1,10 +1,10 @@
 extends layout
 
 block content
-  div(class="flex justify-center px-8")
-    div(class="flex justify-center flex-col  max-w-screen-lg max-h-screen-lg pb-10")
+  div(class="flex justify-center p-8")
+    div(class="flex justify-center flex-col  max-w-screen-md max-h-screen-md pb-10")
       img(src=synth.img_url alt=`${synth.name} synthesizer image` loading='lazy' class=" w-full h-auto py-5") 
-      h1(class=" font-bold text-xl") #{synth.name}
+      h1(class=" font-bold text-4xl pb-1") #{synth.name}
       h4(class="font-bold") Manufacturer: 
         each manu in synth.manufacturer
           a(href=manu.url class="underline font-normal")  #{manu.title}

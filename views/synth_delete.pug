@@ -2,7 +2,7 @@ extends layout
 
 block content
 
-  form(class='px-16' method='POST' action='')
+  form(class='px-16 max-w-screen-sm my-0 mx-auto' method='POST' action='')
     h1(class="font-bold text-center text-2xl py-5") #{synth.name}
 
     div
@@ -13,6 +13,6 @@ block content
       type="password" name="password" required='true' placeholder="Password")  
               
     div(class="flex justify-center") 
-      button(class="w-full flex items-center justify-center text-red-500 border-red-500 mt-2 border-2 px-2 py-1 hover:border-red-600 hover:text-red-600"  
+      button(class="w-full flex items-center justify-center text-red-600 border-red-600 mt-2 border-2 px-2 py-1 hover:border-red-500 hover:text-red-500"  
       type='submit') Delete
         span(class="material-icons mx-1" aria-hidden="true") clear   

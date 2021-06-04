@@ -3,9 +3,8 @@ extends layout
 block content
   div(class="flex justify-center items-center")
     a(href='/catalog/synth/add' 
-    class="flex items-center justify-center text-gray-500 mt-5 border-2 px-2 py-1 hover:border-green-700 hover:text-green-700")
-      span(class="material-icons mr-1" aria-hidden="true") add
-      span Synthesizer
+    class="flex items-center justify-center text-green-700 mt-5 border-green-700 border-2 pl-3 pr-2 py-1 hover:border-green-600 hover:text-green-600") Add Synthesizer
+      span(class="material-icons ml-1" aria-hidden="true") add
 
   div(class="mt-3 mx-3")
     each synth in synths
@@ -13,11 +12,11 @@ block content
         div(class=" max-w-screen-sm max-h-screen-sm py-4") 
           img(src=synth.img_url alt=`${synth.name} synthesizer image` loading='lazy' class=" w-full h-auto")
           div(class="flex flex-col mt-5 text-gray-700") 
-            span(class="font-bold text-lg text-black") #{synth.name}
+            span(class="font-bold text-2xl text-black") #{synth.name}
             span Price: $#{synth.price}
             span In Stock: #{synth.in_stock}
             span Release Date: #{synth.release_date.getFullYear()}
-            a(href=synth.url class="text-center text-gray-500 mt-2 border-2 px-2 py-1 hover:border-gray-600" 
+            a(href=synth.url class="text-center text-gray-500 border-gray-400 mt-2 border-2 px-2 py-1 hover:border-gray-600" 
             aria-hidden="true") 
               span More Details
               
