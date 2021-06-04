@@ -82,6 +82,13 @@ exports.manufacturer_edit_post = [
     .escape(),
 
   (req, res, next) => {
+    if (req.body.password !== process.env.AUTH_PASSWORD) {
+      let err = new Error('Password is incorrect!');
+      err.status = 404;
+
+      return next(err);
+    }
+
     const errors = validationResult(req);
 
     const manufacturer = new Manufacturer({
@@ -146,6 +153,13 @@ exports.manufacturer_delete_get = function (req, res, next) {
 
 // Handle manufacturer delete on POST
 exports.maanufacturer_delete_post = function (req, res, next) {
+  if (req.body.password !== process.env.AUTH_PASSWORD) {
+    let err = new Error('Password is incorrect!');
+    err.status = 404;
+
+    return next(err);
+  }
+
   async.parallel(
     {
       manufacturer: function (callback) {

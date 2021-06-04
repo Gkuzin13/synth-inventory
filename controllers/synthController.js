@@ -13,7 +13,7 @@ exports.index = function (req, res) {
     },
     function (err, results) {
       res.render('index', {
-        title: 'Synth Store',
+        title: 'Synthesizer Inventory',
         error: err,
         data: results,
       });
@@ -126,6 +126,7 @@ exports.synth_add_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
+
     const synth = new Synth({
       name: req.body.name,
       description: req.body.description,
@@ -196,6 +197,13 @@ exports.synth_delete_get = function (req, res, next) {
 
 // Handle Synth delete on POST
 exports.synth_delete_post = function (req, res, next) {
+  if (req.body.password !== process.env.AUTH_PASSWORD) {
+    let err = new Error('Password is incorrect!');
+    err.status = 404;
+
+    return next(err);
+  }
+
   async.parallel(
     {
       synth: function (callback) {
@@ -290,6 +298,13 @@ exports.synth_edit_post = [
 
   // Process request after validation and sanitization
   (req, res, next) => {
+    if (req.body.password !== process.env.AUTH_PASSWORD) {
+      let err = new Error('Password is incorrect!');
+      err.status = 404;
+
+      return next(err);
+    }
+
     const errors = validationResult(req);
 
     // Create a Synth object with escaped/trimmed data with same id
