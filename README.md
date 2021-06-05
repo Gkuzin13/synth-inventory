@@ -3,7 +3,7 @@
 
 ### A simple inventory app i made to learn more about NodeJS, ExpressJS and MongoDB. 
 
-![Link](https://syntage.herokuapp.com/)
+[Link](https://syntage.herokuapp.com/)
 
 ### Tech/Framework Used
 - [NodeJS](https://nodejs.org/en/)
