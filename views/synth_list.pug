@@ -6,9 +6,9 @@ block content
     class="flex items-center justify-center text-green-700 my-5 border-green-700 border-2 pl-3 pr-2 py-1 hover:border-green-600 hover:text-green-600") Add Synthesizer
       span(class="material-icons ml-1" aria-hidden="true") add
 
-  div(class="m-3 flex justify-between flex-col items-center max-w-2xl my-0 mx-auto")
+  div(class="flex justify-between flex-col items-center max-w-2xl pb-10 my-0 mx-auto")
     each synth in synths
-      div(class="flex justify-center items-center flex-col p-4 px-8 w-full")
+      div(class="flex justify-center items-center flex-col py-8 px-8 w-full")
         div(class="w-full flex justify-center") 
           if synth.img_url 
             img(src=synth.img_url alt=`${synth.name} synthesizer image` loading='lazy' class="object-cover")
